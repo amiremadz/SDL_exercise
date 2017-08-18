@@ -9,12 +9,17 @@
 #include <iostream>
 #include <iomanip>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 #include "Screen.h"
+#include "Swarm.h"
 
 using namespace std;
 using namespace particles;
 
 int main() {
+
+	srand(time(NULL));
 
 	cout << SDL_GetNumVideoDisplays() << endl;
 
@@ -32,8 +37,12 @@ int main() {
 
 	//SDL_Delay(3000);
 
+	Swarm swarm;
+
 	while(true)
 	{
+		const Particle * const particles = swarm.getParticles();
+
 		int elapsed = SDL_GetTicks();
 
 		Uint8 red = static_cast<Uint8> ((1 + sin(elapsed * 0.0001)) * 128);
@@ -41,13 +50,13 @@ int main() {
 		Uint8 blue = static_cast<Uint8> ((1 + sin(elapsed * 0.0003)) * 128);
 
 		//Draw Particles
-		for(int y=0; y<Screen::SCREEN_HEIGHT; y++){
-			for(int x=0; x<Screen::SCREEN_WIDTH; x++){
-				screen.setPixel(x, y, red, green, blue);
-			}
-		}
+		for(int i=0; i<Swarm::NPARTICLES; i++){
+			Particle particle = particles[i];
+			int x = static_cast<int>( (particle.getX() + 1)*Screen::SCREEN_WIDTH/2 );
+			int y = static_cast<int>( (particle.getY() + 1)*Screen::SCREEN_HEIGHT/2 );
 
-		//screen.setPixel(200, 150, 255, 255, 255);
+			screen.setPixel(x, y, red, green, blue);
+		}
 
 		// Draw the screen
 		screen.update();

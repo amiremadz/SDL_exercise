@@ -89,12 +89,11 @@ int Screen::makeColor(char red, char green, char blue){
 }
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
-	int color = makeColor(red, green, blue);
-	int index = 0;
-
 	if( (y<0) || (y>=SCREEN_HEIGHT) || (x<0) || (x>=SCREEN_WIDTH) ){
 		return;
 	}
+	int color = makeColor(red, green, blue);
+	int index = 0;
 
 	index = y*SCREEN_WIDTH + x;
 	mBuffer[index] = color;
