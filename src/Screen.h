@@ -24,7 +24,17 @@ public:
 public:
 	bool init();
 	bool processEvents();
+	/**
+	 * x : column number
+	 * y : row number
+	 */
+	void setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
+	void update();
 	void close();
+
+
+private:
+	int makeColor(char red, char green, char blue);
 
 private:
 	SDL_Window *mWindow;

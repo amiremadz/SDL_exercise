@@ -13,11 +13,9 @@ Screen::Screen():
 		mWindow(NULL), mRenderer(NULL), mTexture(NULL), mBuffer(NULL) {
 }
 
-
 Screen::~Screen() {
 	// TODO Auto-generated destructor stub
 }
-
 
 bool Screen::init(){
 
@@ -55,16 +53,6 @@ bool Screen::init(){
 	mBuffer = new Uint32[SCREEN_WIDTH*SCREEN_HEIGHT];
 	memset(mBuffer, 0, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
 
-	for(int i=0; i<SCREEN_WIDTH*SCREEN_HEIGHT/4; i++)
-	{
-		mBuffer[i] = 0xFFFF00FF;
-	}
-
-	SDL_UpdateTexture(mTexture, NULL, mBuffer, SCREEN_WIDTH*sizeof(Uint32));
-	SDL_RenderClear(mRenderer);
-	SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
-	SDL_RenderPresent(mRenderer);
-
 	return true;
 }
 
@@ -79,6 +67,39 @@ bool Screen::processEvents(){
 	return true;
 }
 
+void Screen::update(){
+	SDL_UpdateTexture(mTexture, NULL, mBuffer, SCREEN_WIDTH*sizeof(Uint32));
+	SDL_RenderClear(mRenderer);
+	SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
+	SDL_RenderPresent(mRenderer);
+
+}
+
+int Screen::makeColor(char red, char green, char blue){
+	int color = red;
+
+	color <<= 8;
+	color += green;
+	color <<= 8;
+	color += blue;
+	color <<= 8;
+	color += 0xFF;
+
+	return color;
+}
+
+void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
+	int color = makeColor(red, green, blue);
+	int index = 0;
+
+	if( (y<0) || (y>=SCREEN_HEIGHT) || (x<0) || (x>=SCREEN_WIDTH) ){
+		return;
+	}
+
+	index = y*SCREEN_WIDTH + x;
+	mBuffer[index] = color;
+}
+
 void Screen::close(){
 
 	delete[] mBuffer;
@@ -86,8 +107,6 @@ void Screen::close(){
 	SDL_DestroyTexture(mTexture);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
-
 }
-
 
 } /* namespace particles */

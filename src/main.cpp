@@ -7,6 +7,7 @@
 //============================================================================
 
 #include <iostream>
+#include <iomanip>
 #include "Screen.h"
 
 using namespace std;
@@ -32,6 +33,19 @@ int main() {
 
 	while(true)
 	{
+		//Draw Particles
+		for(int y=0; y<Screen::SCREEN_HEIGHT; y++){
+			for(int x=0; x<Screen::SCREEN_WIDTH; x++){
+				screen.setPixel(x, y, 128, 128, 255);
+			}
+		}
+
+		screen.setPixel(200, 150, 255, 255, 255);
+
+		// Draw the screen
+		screen.update();
+
+		// Check for message/events
 		if(!screen.processEvents()){
 			break;
 		}
