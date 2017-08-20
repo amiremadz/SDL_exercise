@@ -17,13 +17,18 @@ public:
 private:
 	double mX;
 	double mY;
+	double mXspeed;
+	double mYspeed;
+
 
 public:
 	double getX() { return mX; };
 	double getY() { return mY; }
+	void update();
 
 public:
 	virtual ~Particle();
+
 };
 
 } /* namespace particles */

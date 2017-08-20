@@ -51,7 +51,7 @@ bool Screen::init(){
 	}
 
 	mBuffer = new Uint32[SCREEN_WIDTH*SCREEN_HEIGHT];
-	memset(mBuffer, 0, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
+	clear();
 
 	return true;
 }
@@ -92,7 +92,7 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
 	if( (y<0) || (y>=SCREEN_HEIGHT) || (x<0) || (x>=SCREEN_WIDTH) ){
 		return;
 	}
-	int color = makeColor(red, green, blue);
+	Uint32 color = makeColor(red, green, blue);
 	int index = 0;
 
 	index = y*SCREEN_WIDTH + x;
@@ -107,5 +107,11 @@ void Screen::close(){
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
 }
+
+
+void Screen::clear(){
+	memset(mBuffer, 0, (Screen::SCREEN_WIDTH)*(Screen::SCREEN_HEIGHT)*sizeof(Uint32));
+}
+
 
 } /* namespace particles */

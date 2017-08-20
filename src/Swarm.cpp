@@ -6,7 +6,7 @@
  */
 
 #include "Swarm.h"
-
+#include <vector>
 namespace particles {
 
 Swarm::Swarm() {
@@ -17,5 +17,14 @@ Swarm::Swarm() {
 Swarm::~Swarm() {
 	delete[] mParticles;
 }
+
+
+void Swarm::update(){
+	for(int i=0; i<NPARTICLES; i++){
+			mParticles[i].update();
+		}
+}
+
+
 
 } /* namespace particles */
