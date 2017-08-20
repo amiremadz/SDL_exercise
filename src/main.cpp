@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include "Screen.h"
@@ -41,7 +40,6 @@ int main() {
 
 	while(true)
 	{
-
 		swarm.update();
 
 		int elapsed = SDL_GetTicks();
@@ -56,7 +54,9 @@ int main() {
 		for(int i=0; i<Swarm::NPARTICLES; i++){
 			Particle particle = particles[i];
 			int x = static_cast<int>( (particle.getX() + 1)*Screen::SCREEN_WIDTH/2 );
-			int y = static_cast<int>( (particle.getY() + 1)*Screen::SCREEN_HEIGHT/2 );
+
+			//int y = static_cast<int>( (particle.getY() + 1)*Screen::SCREEN_WIDTH/2 +(Screen::SCREEN_HEIGHT - Screen::SCREEN_WIDTH)/2);
+			int y = static_cast<int>( particle.getY()*Screen::SCREEN_WIDTH/2 + (Screen::SCREEN_HEIGHT)/2);
 
 			cout << x << " " << y << endl;
 

@@ -7,14 +7,13 @@
 
 #include "Particle.h"
 #include <stdlib.h>
+#include <iostream>
 
 namespace particles {
 
-Particle::Particle() {
-	mX = (2.0*rand())/RAND_MAX - 1;
-	mY = (2.0*rand())/RAND_MAX - 1;
-	mXspeed = 0.001 * ((2.0*rand())/RAND_MAX - 1);
-    mYspeed = 0.001 * ((2.0*rand())/RAND_MAX - 1);
+Particle::Particle(): mX(0), mY(0), mR(0) {
+	mTheta = (2* M_PI*rand())/RAND_MAX;
+	mRspeed = (0.001*rand()/RAND_MAX);
 }
 
 Particle::~Particle() {
@@ -22,16 +21,19 @@ Particle::~Particle() {
 }
 
 void Particle::update(){
-	mX += mXspeed;
-	mY += mYspeed;
+
+	mR += mRspeed;
+
+	mX = mR*cos(mTheta);
+	mY = mR*sin(mTheta);
 
 	// To avoid particles from going off the screen
 	if(mX <= -1 || mX >= 1){
-		mXspeed = -mXspeed;
+		mRspeed = -mRspeed;
 	}
 
 	if(mY <= -1 || mY >= 1){
-		mYspeed = -mYspeed;
+		mRspeed = -mRspeed;
 	}
 }
 

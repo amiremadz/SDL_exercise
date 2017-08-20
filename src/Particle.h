@@ -8,6 +8,8 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
+#include <math.h>
+
 namespace particles {
 
 class Particle {
@@ -17,9 +19,9 @@ public:
 private:
 	double mX;
 	double mY;
-	double mXspeed;
-	double mYspeed;
-
+	double mR;
+	double mTheta;
+	double mRspeed;
 
 public:
 	double getX() { return mX; };

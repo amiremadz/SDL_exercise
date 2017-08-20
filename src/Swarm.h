@@ -14,7 +14,7 @@ namespace particles {
 
 class Swarm {
 public:
-	static const int NPARTICLES = 1000;
+	static const int NPARTICLES = 5000;
 
 public:
 	Swarm();
