@@ -31,17 +31,19 @@ public:
 	void setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
 	void update();
 	void close();
-	void clear();
+	void boxBlur();
 
 
 private:
-	int makeColor(char red, char green, char blue);
+	Uint32 makeColor(Uint8 red, Uint8 green, Uint8 blue);
+	void filter(Uint32* pixel);
 
 private:
 	SDL_Window *mWindow;
 	SDL_Renderer *mRenderer;
 	SDL_Texture *mTexture;
 	Uint32 *mBuffer;
+	Uint32 * mExtraBuffer;
 
 public:
 	virtual ~Screen();

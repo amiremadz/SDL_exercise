@@ -26,7 +26,7 @@ private:
 public:
 	double getX() { return mX; };
 	double getY() { return mY; }
-	void update(int interval);
+	void update(int interval, bool bounceBack);
 
 public:
 	virtual ~Particle();

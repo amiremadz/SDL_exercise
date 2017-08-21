@@ -10,7 +10,7 @@
 namespace particles {
 
 Screen::Screen():
-		mWindow(NULL), mRenderer(NULL), mTexture(NULL), mBuffer(NULL) {
+		mWindow(NULL), mRenderer(NULL), mTexture(NULL), mBuffer(NULL), mExtraBuffer(NULL) {
 }
 
 Screen::~Screen() {
@@ -18,7 +18,6 @@ Screen::~Screen() {
 }
 
 bool Screen::init(){
-
 	if(SDL_Init(SDL_INIT_VIDEO) < 0 )
 	{
 		return false;
@@ -51,7 +50,10 @@ bool Screen::init(){
 	}
 
 	mBuffer = new Uint32[SCREEN_WIDTH*SCREEN_HEIGHT];
-	clear();
+	mExtraBuffer = new Uint32[SCREEN_WIDTH*SCREEN_HEIGHT];
+
+	memset(mBuffer, 0, (Screen::SCREEN_WIDTH)*(Screen::SCREEN_HEIGHT)*sizeof(Uint32));
+	memset(mExtraBuffer, 0, (Screen::SCREEN_WIDTH)*(Screen::SCREEN_HEIGHT)*sizeof(Uint32));
 
 	return true;
 }
@@ -72,11 +74,10 @@ void Screen::update(){
 	SDL_RenderClear(mRenderer);
 	SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
 	SDL_RenderPresent(mRenderer);
-
 }
 
-int Screen::makeColor(char red, char green, char blue){
-	int color = red;
+Uint32 Screen::makeColor(Uint8 red, Uint8 green, Uint8 blue){
+	Uint32 color = red;
 
 	color <<= 8;
 	color += green;
@@ -92,26 +93,68 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
 	if( (y<0) || (y>=SCREEN_HEIGHT) || (x<0) || (x>=SCREEN_WIDTH) ){
 		return;
 	}
-	Uint32 color = makeColor(red, green, blue);
-	int index = 0;
 
-	index = y*SCREEN_WIDTH + x;
+	Uint32 color = makeColor(red, green, blue);
+	int index = y*SCREEN_WIDTH + x;
 	mBuffer[index] = color;
 }
 
 void Screen::close(){
-
 	delete[] mBuffer;
+	delete[] mExtraBuffer;
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyTexture(mTexture);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
 }
 
+void Screen::boxBlur(){
+	Uint32* temp;
+	temp = mBuffer;
+	mBuffer = mExtraBuffer;
+	mExtraBuffer = temp;
 
-void Screen::clear(){
-	memset(mBuffer, 0, (Screen::SCREEN_WIDTH)*(Screen::SCREEN_HEIGHT)*sizeof(Uint32));
+	for(int x=0; x<Screen::SCREEN_WIDTH; x++){
+		for(int y=0; y<Screen::SCREEN_HEIGHT; y++){
+
+			Uint32 totalRed = 0;
+			Uint32 totalGreen = 0;
+			Uint32 totalBlue = 0;
+
+			for(int xShift=-1; xShift<=1; xShift++){
+				for(int yShift=-1; yShift<=1; yShift++){
+
+					int currentX = x + xShift;
+					int currentY = y + yShift;
+
+					bool isIndexValid = currentX >= 0 && currentX < Screen::SCREEN_WIDTH
+							&& currentY >=0  && currentY < Screen::SCREEN_HEIGHT;
+
+					if(isIndexValid){
+						Uint32 color = mExtraBuffer[currentY*Screen::SCREEN_WIDTH + currentX];
+
+						Uint8 red = color >> 24; //(color & 0xFF000000) >> 24;
+						Uint8 green = color >> 16;
+						Uint8 blue = color >> 8;
+
+						totalRed += red;
+						totalGreen += green;
+						totalBlue += blue;
+					}
+				}
+			}
+
+			Uint8 avgRed = totalRed/9;
+			Uint8 avgGreen = totalGreen/9;
+			Uint8 avgBlue = totalBlue/9;
+
+			setPixel(x, y, avgRed, avgGreen, avgBlue);
+		}
+	}
 }
+
+
+
 
 
 } /* namespace particles */

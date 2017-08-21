@@ -20,7 +20,7 @@ Particle::~Particle() {
 	// TODO Auto-generated destructor stub
 }
 
-void Particle::update(int interval){
+void Particle::update(int interval, bool bounceBack){
 
 	mR += mRspeed*interval;
 
@@ -28,12 +28,11 @@ void Particle::update(int interval){
 	mY = mR*sin(mTheta);
 
 	// To avoid particles from going off the screen
-	if(mX <= -1 || mX >= 1){
-		mRspeed = -mRspeed;
-	}
-
-	if(mY <= -1 || mY >= 1){
-		mRspeed = -mRspeed;
+	if(bounceBack){
+		bool isOnEdge = mX <= -1 || mX >= 1 || mY <= -1 || mY >= 1;
+		if(isOnEdge){
+			mRspeed = -mRspeed;
+		}
 	}
 }
 

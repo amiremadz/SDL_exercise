@@ -25,7 +25,7 @@ private:
 
 public:
 	const Particle* const getParticles() { return mParticles; };
-	void update(int elapsed);
+	void update(int elapsed, bool bounceBack);
 
 
 public:
