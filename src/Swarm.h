@@ -21,10 +21,11 @@ public:
 
 private:
 	Particle* mParticles;
+	int mLastTime;
 
 public:
 	const Particle* const getParticles() { return mParticles; };
-	void update();
+	void update(int elapsed);
 
 
 public:

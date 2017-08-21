@@ -13,16 +13,16 @@ namespace particles {
 
 Particle::Particle(): mX(0), mY(0), mR(0) {
 	mTheta = (2* M_PI*rand())/RAND_MAX;
-	mRspeed = (0.001*rand()/RAND_MAX);
+	mRspeed = (0.0005*rand()/RAND_MAX);
 }
 
 Particle::~Particle() {
 	// TODO Auto-generated destructor stub
 }
 
-void Particle::update(){
+void Particle::update(int interval){
 
-	mR += mRspeed;
+	mR += mRspeed*interval;
 
 	mX = mR*cos(mTheta);
 	mY = mR*sin(mTheta);

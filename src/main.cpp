@@ -40,9 +40,8 @@ int main() {
 
 	while(true)
 	{
-		swarm.update();
-
 		int elapsed = SDL_GetTicks();
+		swarm.update(elapsed);
 
 		Uint8 red = static_cast<Uint8> ((1 + sin(elapsed * 0.0001)) * 128);
 		Uint8 green = static_cast<Uint8> ((1 + sin(elapsed * 0.0002)) * 128);
