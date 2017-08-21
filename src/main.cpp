@@ -34,15 +34,12 @@ int main() {
 	    return 1;
 	}
 
-	//SDL_Delay(3000);
-
 	Swarm swarm;
-	bool bounceBack = false;
 
 	while(true)
 	{
 		int elapsed = SDL_GetTicks();
-		swarm.update(elapsed, bounceBack);
+		swarm.update(elapsed);
 
 		Uint8 red = static_cast<Uint8> ((1 + sin(elapsed * 0.0001)) * 128);
 		Uint8 green = static_cast<Uint8> ((1 + sin(elapsed * 0.0002)) * 128);
@@ -54,10 +51,9 @@ int main() {
 		for(int i=0; i<Swarm::NPARTICLES; i++){
 			Particle particle = particles[i];
 			int x = static_cast<int>( (particle.getX() + 1)*Screen::SCREEN_WIDTH/2 );
-			//int y = static_cast<int>( (particle.getY() + 1)*Screen::SCREEN_WIDTH/2 +(Screen::SCREEN_HEIGHT - Screen::SCREEN_WIDTH)/2);
-			int y = static_cast<int>( particle.getY()*Screen::SCREEN_WIDTH/2 + (Screen::SCREEN_HEIGHT)/2);
+			int y = static_cast<int>( (particle.getY() + 1)*Screen::SCREEN_WIDTH/2 + (Screen::SCREEN_HEIGHT - Screen::SCREEN_WIDTH)/2);
 
-			cout << x << " " << y << endl;
+			//cout << x << " " << y << endl;
 
 			screen.setPixel(x, y, red, green, blue);
 		}

@@ -20,12 +20,12 @@ Swarm::~Swarm() {
 }
 
 
-void Swarm::update(int elapsed, bool bounceBack){
+void Swarm::update(int elapsed){
 
 	int interval = elapsed - mLastTime;
 
 	for(int i=0; i<NPARTICLES; i++){
-			mParticles[i].update(interval, bounceBack);
+			mParticles[i].update(interval);
 		}
 
 	mLastTime = elapsed;

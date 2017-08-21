@@ -18,8 +18,8 @@ public:
 	Screen();
 
 public:
-	static const int SCREEN_WIDTH = 400;
-	static const int SCREEN_HEIGHT = 300;
+	static const int SCREEN_WIDTH = 800;
+	static const int SCREEN_HEIGHT = 600;
 
 public:
 	bool init();

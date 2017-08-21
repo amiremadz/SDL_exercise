@@ -11,29 +11,40 @@
 
 namespace particles {
 
-Particle::Particle(): mX(0), mY(0), mR(0) {
+Particle::Particle(){
+	init();
+}
+
+void Particle::init(){
+	mX = 0;
+	mY = 0;
+	mR = 0;
 	mTheta = (2* M_PI*rand())/RAND_MAX;
-	mRspeed = (0.0005*rand()/RAND_MAX);
+	mRspeed = (0.05*rand()/RAND_MAX);
+	mRspeed = mRspeed * mRspeed;
 }
 
 Particle::~Particle() {
 	// TODO Auto-generated destructor stub
 }
 
-void Particle::update(int interval, bool bounceBack){
-
+void Particle::update(int interval){
 	mR += mRspeed*interval;
+	mTheta += interval * 0.0005;
 
 	mX = mR*cos(mTheta);
 	mY = mR*sin(mTheta);
 
-	// To avoid particles from going off the screen
-	if(bounceBack){
-		bool isOnEdge = mX <= -1 || mX >= 1 || mY <= -1 || mY >= 1;
-		if(isOnEdge){
-			mRspeed = -mRspeed;
-		}
+	bool isOnEdge = mX <= -1 || mX >= 1 || mY <= -1 || mY >= 1;
+
+	if(isOnEdge){
+		init();
 	}
+
+	if(rand() < 0.01*RAND_MAX){
+		init();
+	}
+
 }
 
 
