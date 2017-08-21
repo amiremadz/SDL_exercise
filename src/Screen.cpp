@@ -153,8 +153,4 @@ void Screen::boxBlur(){
 	}
 }
 
-
-
-
-
 } /* namespace particles */

@@ -47,11 +47,7 @@ private:
 
 public:
 	virtual ~Screen();
-
-
 };
-
-
 
 } /* namespace particles */
 

@@ -28,7 +28,7 @@ Particle::~Particle() {
 	// TODO Auto-generated destructor stub
 }
 
-void Particle::update(int interval){
+void Particle::update(int interval, int elapsed){
 	mR += mRspeed*interval;
 	mTheta += interval * 0.0005;
 
@@ -45,10 +45,11 @@ void Particle::update(int interval){
 		init();
 	}
 
+	mRed = static_cast<Uint8> ((1 + cos(elapsed * 0.001)) * 128);
+	mGreen = static_cast<Uint8> ((1 + sin(elapsed * 0.002)) * 128);
+	mBlue = static_cast<Uint8> ((1 + cos(elapsed * 0.003)) * 128);
+
 }
-
-
-
 
 } /* namespace particles */
 

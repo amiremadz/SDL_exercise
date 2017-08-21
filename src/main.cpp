@@ -41,19 +41,19 @@ int main() {
 		int elapsed = SDL_GetTicks();
 		swarm.update(elapsed);
 
-		Uint8 red = static_cast<Uint8> ((1 + sin(elapsed * 0.0001)) * 128);
-		Uint8 green = static_cast<Uint8> ((1 + sin(elapsed * 0.0002)) * 128);
-		Uint8 blue = static_cast<Uint8> ((1 + sin(elapsed * 0.0003)) * 128);
-
 		const Particle * const particles = swarm.getParticles();
 
 		//Draw Particles
+
 		for(int i=0; i<Swarm::NPARTICLES; i++){
 			Particle particle = particles[i];
+
 			int x = static_cast<int>( (particle.getX() + 1)*Screen::SCREEN_WIDTH/2 );
 			int y = static_cast<int>( (particle.getY() + 1)*Screen::SCREEN_WIDTH/2 + (Screen::SCREEN_HEIGHT - Screen::SCREEN_WIDTH)/2);
 
-			//cout << x << " " << y << endl;
+			Uint8 red = particle.getRed();
+			Uint8 green = particle.getGreen();
+			Uint8 blue = particle.getBlue();
 
 			screen.setPixel(x, y, red, green, blue);
 		}
