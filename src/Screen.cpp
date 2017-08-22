@@ -14,7 +14,8 @@ Screen::Screen():
 }
 
 Screen::~Screen() {
-	// TODO Auto-generated destructor stub
+	delete[] mBuffer;
+	delete[] mExtraBuffer;
 }
 
 bool Screen::init(){

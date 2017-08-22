@@ -24,7 +24,7 @@ private:
 	int mLastTime;
 
 public:
-	const Particle* const getParticles() { return mParticles; };
+	const Particle* const getParticles() { return mParticles; }
 	void update(int elapsed);
 
 public:

@@ -30,12 +30,12 @@ private:
 
 
 public:
-	double getX() { return mX; };
-	double getY() { return mY; };
+	double getX() { return mX; }
+	double getY() { return mY; }
 	void update(int interval, int elapsed);
-	Uint8 getRed() { return mRed; };
-	Uint8 getGreen() { return mGreen; };
-	Uint8 getBlue() { return mBlue; };
+	Uint8 getRed() { return mRed; }
+	Uint8 getGreen() { return mGreen; }
+	Uint8 getBlue() { return mBlue; }
 
 
 private:
